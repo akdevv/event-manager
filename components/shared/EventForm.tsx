@@ -9,18 +9,24 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-
-import { z } from "zod";
-import { useState } from "react";
-import Dropdown from "./Dropdown";
-import { useForm } from "react-hook-form";
-import { FileUploader } from "./FileUploader";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
+
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import Image from "next/image";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+import Dropdown from "./Dropdown";
+import { FileUploader } from "./FileUploader";
 import { eventDefaultValues } from "@/constants";
 import { eventFormSchema } from "@/lib/validator";
-import { Textarea } from "@/components/ui/textarea";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 type EventFormProps = {
 	userId: string;
@@ -86,8 +92,8 @@ function EventForm({ userId, type }: EventFormProps) {
 					/>
 				</div>
 
-				{/* Description */}
 				<div className="flex flex-col gap-5 md:flex-row">
+					{/* Description */}
 					<FormField
 						control={form.control}
 						name="description"
@@ -104,27 +110,225 @@ function EventForm({ userId, type }: EventFormProps) {
 							</FormItem>
 						)}
 					/>
+
+					{/* Image */}
+					<FormField
+						control={form.control}
+						name="imageUrl"
+						render={({ field }) => (
+							<FormItem className="w-full">
+								<FormControl className="h-72">
+									<FileUploader
+										onFieldChange={field.onChange}
+										imageUrl={field.value}
+										setFiles={setFiles}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 				</div>
 
-				{/* Image */}
-				<FormField
-					control={form.control}
-					name="description"
-					render={({ field }) => (
-						<FormItem className="w-full">
-							<FormControl className="h-72">
-								<FileUploader
-									onFieldChange={field.onChange}
-									imageUrl={field.value}
-									setFiles={setFiles}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+				{/* Location */}
+				<div className="flex flex-col gap-5 md:flex-row">
+					<FormField
+						control={form.control}
+						name="loc"
+						render={({ field }) => (
+							<FormItem className="w-full">
+								<FormControl>
+									<div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+										<Image
+											src="/assets/icons/location-grey.svg"
+											alt="location pin"
+											width={24}
+											height={24}
+										/>
+										<Input
+											placeholder="Event Loaction or Online"
+											className="input-field"
+											{...field}
+										/>
+									</div>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				</div>
 
-				<Button type="submit">Submit</Button>
+				{/* Date */}
+				<div className="flex flex-col gap-5 md:flex-row">
+					{/* Start Date */}
+					<FormField
+						control={form.control}
+						name="startDateTime"
+						render={({ field }) => (
+							<FormItem className="w-full">
+								<FormControl>
+									<div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+										<Image
+											src="/assets/icons/calendar.svg"
+											alt="calendar"
+											width={24}
+											height={24}
+											className="filter-grey"
+										/>
+										<p className="ml-3 whitespace-nowrap text-gray-600">
+											Start Date:
+										</p>
+										<DatePicker
+											showTimeSelect
+											timeInputLabel="Time:"
+											dateFormat="dd/MM/yyyy hh:mm aa"
+											wrapperClassName="datePicker"
+											selected={field.value}
+											onChange={(date: Date) =>
+												field.onChange(date)
+											}
+										/>
+									</div>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					{/* End Date */}
+					<FormField
+						control={form.control}
+						name="endDateTime"
+						render={({ field }) => (
+							<FormItem className="w-full">
+								<FormControl>
+									<div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+										<Image
+											src="/assets/icons/calendar.svg"
+											alt="calendar"
+											width={24}
+											height={24}
+											className="filter-grey"
+										/>
+										<p className="ml-3 whitespace-nowrap text-gray-600">
+											End Date:
+										</p>
+										<DatePicker
+											showTimeSelect
+											timeInputLabel="Time:"
+											dateFormat="dd/MM/yyyy hh:mm aa"
+											wrapperClassName="datePicker"
+											selected={field.value}
+											onChange={(date: Date) =>
+												field.onChange(date)
+											}
+										/>
+									</div>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				</div>
+
+				<div className="flex flex-col gap-5 md:flex-row">
+					{/* Price */}
+					<FormField
+						control={form.control}
+						name="price"
+						render={({ field }) => (
+							<FormItem className="w-full">
+								<FormControl>
+									<div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+										<Image
+											src="/assets/icons/dollar.svg"
+											alt="dollar"
+											width={24}
+											height={24}
+											className="filter-grey"
+										/>
+										<Input
+											type="number"
+											placeholder="Price"
+											{...field}
+											className="p-regular-16 border-0 bg-grey-50 outline-offset-0 focus:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+										/>
+
+										{/* isFree Input */}
+										<FormField
+											control={form.control}
+											name="isFree"
+											render={({ field }) => (
+												<FormItem>
+													<FormControl>
+														<div className="flex items-center">
+															<label
+																htmlFor="isFree"
+																className="whitespace-nowrap pr-3 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+															>
+																Free Ticket
+															</label>
+															<Checkbox
+																id="isFree"
+																checked={
+																	field.value
+																}
+																onCheckedChange={
+																	field.onChange
+																}
+																className="mr-2 h-5 w-5 border-2 border-primary-500"
+															/>
+														</div>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
+									</div>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					{/* URL Input */}
+					<FormField
+						control={form.control}
+						name="url"
+						render={({ field }) => (
+							<FormItem className="w-full">
+								<FormControl>
+									<div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+										<Image
+											src="/assets/icons/link.svg"
+											alt="link"
+											width={24}
+											height={24}
+										/>
+										<Input
+											placeholder="URL"
+											className="input-field"
+											{...field}
+										/>
+									</div>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				</div>
+
+				{/* Submit Button */}
+				<Button
+					type="submit"
+					size="lg"
+					disabled={form.formState.isSubmitting}
+					className="button col-span-2 w-full"
+				>
+					{form.formState.isSubmitting
+						? "Submitting..."
+						: `${type} Event`}
+				</Button>
 			</form>
 		</Form>
 	);

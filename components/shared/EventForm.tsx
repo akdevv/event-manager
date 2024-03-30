@@ -11,9 +11,10 @@ import {
 } from "@/components/ui/form";
 
 import { z } from "zod";
+import { useState } from "react";
 import Dropdown from "./Dropdown";
 import { useForm } from "react-hook-form";
-import FileUploader from "./FileUploader";
+import { FileUploader } from "./FileUploader";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { eventDefaultValues } from "@/constants";
@@ -27,8 +28,9 @@ type EventFormProps = {
 };
 
 function EventForm({ userId, type }: EventFormProps) {
-	const initialValues = eventDefaultValues;
+	const [files, setFiles] = useState<File[]>([]);
 
+	const initialValues = eventDefaultValues;
 	const form = useForm<z.infer<typeof eventFormSchema>>({
 		resolver: zodResolver(eventFormSchema),
 		defaultValues: initialValues,
@@ -111,7 +113,11 @@ function EventForm({ userId, type }: EventFormProps) {
 					render={({ field }) => (
 						<FormItem className="w-full">
 							<FormControl className="h-72">
-								<FileUploader />
+								<FileUploader
+									onFieldChange={field.onChange}
+									imageUrl={field.value}
+									setFiles={setFiles}
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>

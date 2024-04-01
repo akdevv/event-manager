@@ -200,13 +200,13 @@ function EventForm({ userId, type }: EventFormProps) {
 											height={24}
 											className="filter-grey"
 										/>
-										<p className="ml-3 whitespace-nowrap text-gray-600">
+										<p className="ml-3 text-gray-600 whitespace-nowrap">
 											Start Date:
 										</p>
 										<DatePicker
 											showTimeSelect
 											timeInputLabel="Time:"
-											dateFormat="dd/MM/yyyy hh:mm aa"
+											dateFormat="MM/dd/yyyy hh:mm aa"
 											wrapperClassName="datePicker"
 											selected={field.value}
 											onChange={(date: Date) =>
@@ -235,13 +235,13 @@ function EventForm({ userId, type }: EventFormProps) {
 											height={24}
 											className="filter-grey"
 										/>
-										<p className="ml-3 whitespace-nowrap text-gray-600">
+										<p className="ml-3 text-gray-600 whitespace-nowrap">
 											End Date:
 										</p>
 										<DatePicker
 											showTimeSelect
 											timeInputLabel="Time:"
-											dateFormat="dd/MM/yyyy hh:mm aa"
+											dateFormat="MM/dd/yyyy hh:mm aa"
 											wrapperClassName="datePicker"
 											selected={field.value}
 											onChange={(date: Date) =>
@@ -276,7 +276,7 @@ function EventForm({ userId, type }: EventFormProps) {
 											type="number"
 											placeholder="Price"
 											{...field}
-											className="p-regular-16 border-0 bg-grey-50 outline-offset-0 focus:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+											className="border-0 p-regular-16 bg-grey-50 outline-offset-0 focus:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
 										/>
 
 										{/* isFree Input */}
@@ -289,7 +289,7 @@ function EventForm({ userId, type }: EventFormProps) {
 														<div className="flex items-center">
 															<label
 																htmlFor="isFree"
-																className="whitespace-nowrap pr-3 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+																className="pr-3 leading-none whitespace-nowrap peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 															>
 																Free Ticket
 															</label>
@@ -301,7 +301,7 @@ function EventForm({ userId, type }: EventFormProps) {
 																onCheckedChange={
 																	field.onChange
 																}
-																className="mr-2 h-5 w-5 border-2 border-primary-500"
+																className="w-5 h-5 mr-2 border-2 border-primary-500"
 															/>
 														</div>
 													</FormControl>
@@ -348,7 +348,7 @@ function EventForm({ userId, type }: EventFormProps) {
 					type="submit"
 					size="lg"
 					disabled={form.formState.isSubmitting}
-					className="button col-span-2 w-full"
+					className="w-full col-span-2 button"
 				>
 					{form.formState.isSubmitting
 						? "Submitting..."

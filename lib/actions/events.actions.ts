@@ -6,11 +6,7 @@ import Event from "@/models/event.model";
 import { CreateEventParams } from "@/types";
 import { connectToDatabase } from "../database";
 
-export const createEvent = async ({
-	event,
-	userId,
-	path,
-}: CreateEventParams) => {
+export const createEvent = async ({ event, userId }: CreateEventParams) => {
 	try {
 		await connectToDatabase();
 		const organizer = await User.findById(userId);

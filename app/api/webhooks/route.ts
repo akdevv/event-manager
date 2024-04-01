@@ -64,7 +64,7 @@ export async function POST(req: Request) {
 		const user = {
 			clerkId: id,
 			email: email_addresses[0].email_address,
-			username: (first_name + last_name).replace(" ", "").toLowerCase(),
+			username: `${first_name.toLowerCase()}_${last_name.toLowerCase()}`,
 			firstName: first_name,
 			lastName: last_name,
 			photo: image_url,
@@ -82,12 +82,12 @@ export async function POST(req: Request) {
 
 	// UPDATE USER
 	if (eventType === "user.updated") {
-		const { id, image_url, first_name, last_name, username } = evt.data;
+		const { id, image_url, first_name, last_name } = evt.data;
 
 		const user = {
 			firstName: first_name,
 			lastName: last_name,
-			username: username!,
+			username: `${first_name.toLowerCase()}_${last_name.toLowerCase()}`,
 			photo: image_url,
 		};
 		const updatedUser = await updateUser(id, user);

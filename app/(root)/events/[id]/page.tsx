@@ -2,6 +2,8 @@ import Image from "next/image";
 import { SearchParamProps } from "@/types";
 import { formatDateTime } from "@/lib/utils";
 import Collection from "@/components/shared/Collection";
+import CheckoutButton from "@/components/shared/CheckoutButton";
+
 import {
 	getEventById,
 	getRelatedEventsByCategory,
@@ -57,6 +59,7 @@ async function EventDetails({
 						</div>
 
 						{/* CHECKOUT BUTTON */}
+						<CheckoutButton event={evt} />
 
 						{/* DATE AND TIME */}
 						<div className="flex flex-col gap-5">

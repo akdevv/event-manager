@@ -18,7 +18,7 @@ async function page() {
 					<h3 className="h3-bold text-center sm:text-left">
 						My Tickets
 					</h3>
-					<Button asChild className="button hidden sm:flex">
+					<Button asChild size="lg" className="button hidden sm:flex">
 						<Link href="/#events">Explore More Events</Link>
 					</Button>
 				</div>
@@ -43,24 +43,24 @@ async function page() {
 					<h3 className="h3-bold text-center sm:text-left">
 						Events Organized
 					</h3>
-					<Button asChild className="button hidden sm:flex">
+					<Button asChild size="lg" className="button hidden sm:flex">
 						<Link href="/events/create">Create New Event</Link>
 					</Button>
 				</div>
 			</section>
 
-			{/* <section className="wrapper my-8">
-            <Collection
-					data={events?.data}
+			<section className="wrapper my-8">
+				<Collection
+					data={organizedEvents?.data}
 					emptyTitle="No events have been created yet"
 					emptyStateSubtext="Go create some now!"
 					collectionType="Events_Organized"
 					limit={6}
 					page={1}
-                    urlParamName="eventsPage"
+					urlParamName="eventsPage"
 					totalPages={2}
 				/>
-            </section> */}
+			</section>
 		</>
 	);
 }

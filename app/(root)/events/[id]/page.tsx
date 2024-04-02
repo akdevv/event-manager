@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { SearchParamProps } from "@/types";
 import { formatDateTime } from "@/lib/utils";
-import { getEventsById } from "@/lib/actions/events.actions";
+import { getEventById } from "@/lib/actions/events.actions";
 
 async function EventDetails({ params: { id } }: SearchParamProps) {
-	const evt = await getEventsById(id);
+	const evt = await getEventById(id);
 	const start = formatDateTime(evt.startDateTime);
 	const end = formatDateTime(evt.endDateTime);
 	return (

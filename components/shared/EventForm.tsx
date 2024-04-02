@@ -26,22 +26,32 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import Dropdown from "./Dropdown";
 import { FileUploader } from "./FileUploader";
+import { IEvent } from "@/models/event.model";
 import { eventDefaultValues } from "@/constants";
 import { eventFormSchema } from "@/lib/validator";
 import { useUploadThing } from "@/lib/uploadthing";
-import { createEvent } from "@/lib/actions/events.actions";
+import { createEvent, updateEvent } from "@/lib/actions/events.actions";
 
 type EventFormProps = {
 	userId: string;
 	type: "Create" | "Update";
+	event?: IEvent;
+	eventId?: string;
 };
 
-function EventForm({ userId, type }: EventFormProps) {
+function EventForm({ userId, type, event, eventId }: EventFormProps) {
 	const [files, setFiles] = useState<File[]>([]);
 
 	const router = useRouter();
 	const { startUpload } = useUploadThing("imageUploader");
-	const initialValues = eventDefaultValues;
+	const initialValues =
+		event && type === "Update"
+			? {
+					...event,
+					startDateTime: new Date(event.startDateTime),
+					endDateTime: new Date(event.endDateTime),
+			  }
+			: eventDefaultValues;
 
 	const form = useForm<z.infer<typeof eventFormSchema>>({
 		resolver: zodResolver(eventFormSchema),
@@ -67,6 +77,25 @@ function EventForm({ userId, type }: EventFormProps) {
 				if (newEvent) {
 					form.reset();
 					router.push(`/events/${newEvent._id}`);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		}
+		if (type === "Update") {
+			if (!eventId) {
+				router.back();
+				return;
+			}
+			try {
+				const updatedEvent = await updateEvent({
+					userId,
+					event: { ...values, imageUrl: uploadedImageUrl, _id: eventId },
+					path: `/events/${eventId}`,
+				});
+				if (updatedEvent) {
+					form.reset();
+					router.push(`/events/${updatedEvent._id}`);
 				}
 			} catch (error) {
 				console.error(error);

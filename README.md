@@ -2,7 +2,7 @@
 
 ## Overview
 
-Hey there! Evently is our cool event management app that helps you handle all things events! You can make your own events, check out others, and keep everything organized super easily. Plus, it's got a safe way for users to sign in and manage their stuff. Oh, and buying tickets for events is a breeze too, thanks to this neat payment feature we added. It's pretty handy for anyone into hosting or going to events!
+Hey there! Evently is a cool event management app that helps you handle all things events! You can make your own events, check out others, and keep everything organized super easily. Plus, it's got a safe way for users to sign in and manage their stuff. Oh, and buying tickets for events is a breeze too, thanks to it's neat payment feature. It's pretty handy for anyone into hosting or going to events!
 
 ## Run Locally
 
